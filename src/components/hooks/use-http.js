@@ -17,7 +17,7 @@ const useHttp = () => {
       const data = await response.json();
       transformData(data);
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
     setIsLoading(false);
   }, []);

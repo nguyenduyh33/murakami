@@ -1,6 +1,6 @@
 import classes from './List.module.css';
 
-const List = ({ isLoading, items, error }) => {
+const List = ({ isLoading, items = [], error }) => {
   if (isLoading) {
     return (
       <section className={classes.loading}>
