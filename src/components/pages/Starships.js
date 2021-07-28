@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import useHttp from '../hooks/use-http';
+import useIsMounted from '../hooks/use-is-mounted';
 
 import List from '../ui/List';
 import ListItem from '../ui/ListItem';
@@ -7,6 +8,7 @@ import ListItem from '../ui/ListItem';
 const Starships = () => {
   const [starships, setStarships] = useState([]);
   const { isLoading, error, request: fetchStarships } = useHttp();
+  const isMounted = useIsMounted();
 
   useEffect(() => {
     const transformStarships = ({ results }) => {
@@ -20,13 +22,17 @@ const Starships = () => {
           cost: ship.cost_in_credits,
         };
       });
-      setStarships(loadedStarships);
+
+      if (isMounted.current) {
+        setStarships(loadedStarships);
+      }
     };
+
     fetchStarships(
       { url: 'https://swapi.dev/api/starships/' },
       transformStarships
     );
-  }, [fetchStarships]);
+  }, [isMounted, fetchStarships]);
 
   const starshipsItems = starships.map((ship) => {
     return (

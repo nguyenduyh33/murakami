@@ -33,9 +33,7 @@ const TabSet = (props) => {
 
   return (
     <div className={classes.container}>
-      <nav className={classes['tab-set']} role="tablist">
-        {tabs}
-      </nav>
+      <nav className={classes['tab-set']}>{tabs}</nav>
       <div className={classes.content}>{activeTabContent}</div>
     </div>
   );

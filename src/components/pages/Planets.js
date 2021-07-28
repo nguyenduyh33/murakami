@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useHttp from '../hooks/use-http';
 
 import List from '../ui/List';
@@ -7,10 +7,19 @@ import ListItem from '../ui/ListItem';
 const Planets = () => {
   const [planets, setPlanets] = useState([]);
   const { isLoading, error, request: fetchPlanets } = useHttp();
+  const componentIsMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      componentIsMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     const transformPlanets = ({ results }) => {
-      setPlanets(results);
+      if (componentIsMounted.current) {
+        setPlanets(results);
+      }
     };
     fetchPlanets({ url: 'https://swapi.dev/api/planets/' }, transformPlanets);
   }, [fetchPlanets]);
