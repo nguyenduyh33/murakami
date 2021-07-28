@@ -1,0 +1,8 @@
+.item {
+  border-bottom: 1px solid #ccc;
+  padding: 1rem;
+}
+
+.item:last-of-type {
+  border-bottom: none;
+}
